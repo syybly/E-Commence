@@ -1,20 +1,24 @@
-﻿using E_Commence_APP.Data;
+﻿
+using E_Commence.DataAccess.Data;
+using E_Commence.DataAccess.Repository;
+using E_Commence.DataAccess.Repository.IRepository;
+using E_Commence.Models;
 using Microsoft.AspNetCore.Mvc;
-using E_Commence_APP.Models;
+
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace E_Commence_APP.Controllers
 {
     public class CategoryController : Controller
     {
-        private readonly ApplicationDbContext _context;
-        public CategoryController(ApplicationDbContext db)
+        private readonly IUnitOfWork _unitOfWork;
+        public CategoryController(IUnitOfWork unitOfWork)
         {
-            _context = db;
+            _unitOfWork = unitOfWork;
         }
         public IActionResult Index()
         {
-            List<Category> objCategoryList = _context.Categories.ToList();
+            List<Category> objCategoryList = _unitOfWork.Category.GetAll().ToList();
             return View(objCategoryList);
         }
 
@@ -36,8 +40,8 @@ namespace E_Commence_APP.Controllers
 
             if (ModelState.IsValid)
             {
-                _context.Categories.Add(obj);
-                _context.SaveChanges();
+                _unitOfWork.Category.Add(obj);
+                _unitOfWork.Save();
                 TempData["success"] = "Category created successfully";
                 return RedirectToAction("index", "Category");
             }
@@ -51,7 +55,7 @@ namespace E_Commence_APP.Controllers
             {
                 return NotFound();
             }
-            Category category = _context.Categories.Find(id);
+            Category? category = _unitOfWork.Category.Get(u=>u.Id == id);
             if (category == null)
             {
                 return NotFound();
@@ -64,8 +68,8 @@ namespace E_Commence_APP.Controllers
             
             if (ModelState.IsValid)
             {
-                _context.Categories.Update(obj);
-                _context.SaveChanges();
+                _unitOfWork.Category.Update(obj);
+                _unitOfWork.Save();
                 TempData["success"] = "Category updated successfully";
                 return RedirectToAction("index", "Category");
             }
@@ -79,7 +83,7 @@ namespace E_Commence_APP.Controllers
             {
                 return NotFound();
             }
-            Category? category = _context.Categories.Find(id);
+            Category? category = _unitOfWork.Category.Get(u=> u.Id == id);
             if (category == null)
             {
                 return NotFound();
@@ -90,13 +94,13 @@ namespace E_Commence_APP.Controllers
         [HttpPost, ActionName("Delete")]
         public IActionResult DeletePOST(int? id)
         {
-            Category obj = _context.Categories.Find(id);
+            Category obj = _unitOfWork.Category.Get(u =>u.Id == id);
             if (obj == null)
             {
                 return NotFound();
             }
-            _context.Categories.Remove(obj);
-            _context.SaveChanges();
+            _unitOfWork.Category.Remove(obj);
+            _unitOfWork.Save();
             TempData["success"] = "Category deleted successfully";
             return RedirectToAction("index");
 
