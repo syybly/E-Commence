@@ -8,15 +8,27 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Data\**" />
+    <Compile Remove="Migrations\**" />
+    <Compile Remove="Models\**" />
     <Compile Remove="Views\NewFolder1\**" />
     <Compile Remove="Views\NewFolder2\**" />
     <Compile Remove="Views\NewFolder3\**" />
+    <Content Remove="Data\**" />
+    <Content Remove="Migrations\**" />
+    <Content Remove="Models\**" />
     <Content Remove="Views\NewFolder1\**" />
     <Content Remove="Views\NewFolder2\**" />
     <Content Remove="Views\NewFolder3\**" />
+    <EmbeddedResource Remove="Data\**" />
+    <EmbeddedResource Remove="Migrations\**" />
+    <EmbeddedResource Remove="Models\**" />
     <EmbeddedResource Remove="Views\NewFolder1\**" />
     <EmbeddedResource Remove="Views\NewFolder2\**" />
     <EmbeddedResource Remove="Views\NewFolder3\**" />
+    <None Remove="Data\**" />
+    <None Remove="Migrations\**" />
+    <None Remove="Models\**" />
     <None Remove="Views\NewFolder1\**" />
     <None Remove="Views\NewFolder2\**" />
     <None Remove="Views\NewFolder3\**" />
@@ -31,12 +43,21 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0-rc.2.23480.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.0-rc.2.23480.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.0-rc.2.23480.1">
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\E-Commence.DataAccess\E-Commence.DataAccess.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\images\product\" />
   </ItemGroup>
 
 </Project>
